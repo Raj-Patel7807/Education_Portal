@@ -64,18 +64,18 @@ signup.addEventListener("click", () => {
     if (submit.innerText === "Login") {
         submit.innerText = "Sign Up";
         document.querySelector(".heading h1").innerText = "Sign Up";
-        document.querySelector(".signup p").innerText = "Already have an account?";
+        document.querySelector(".signup p").innerText = "Already have an account? ";
         document.querySelector(".signup a").innerText = "Login Here";
         document.querySelector(".container").style.height = "85vh";
-        document.querySelector(".container").style.width = "60vh";
+        document.querySelector(".container").style.width = "27vw";
         document.querySelector(".confirmpass").classList.remove("hide");
     } else {
         submit.innerText = "Login";
         document.querySelector(".heading h1").innerText = "Login";
-        document.querySelector(".signup p").innerText = "Don't have an account?";
+        document.querySelector(".signup p").innerText = "Don't have an account? ";
         document.querySelector(".signup a").innerText = "Sign Up Here";
         document.querySelector(".container").style.height = "72vh";
-        document.querySelector(".container").style.width = "55vh";
+        document.querySelector(".container").style.width = "25vw";
         document.querySelector(".confirmpass").classList.add("hide");
     }
 });
