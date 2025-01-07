@@ -8,9 +8,9 @@
 }
 
 body {
-    background-image: url("images/home4.jpg");
+    /* background-image: url("images/home4.jpg");
     background-size: cover;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat; */
     word-spacing: 5px;
     line-height: 1.5;
     color: #111111;
