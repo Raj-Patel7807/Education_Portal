@@ -1,6 +1,6 @@
 # 📚 Education Portal  
 
-🔗 **Live Project**: [Education Portal](https://Raj_Patel_7807.github.io/Education_Portal/)  
+🔗 **Live Project**: [Education Portal](https://Raj-Patel7807.github.io/Education_Portal/)  
 
 ## 🌟 Overview  
 The **Education Portal** is a web-based learning platform designed to provide interactive and engaging educational experiences. It includes dynamic features such as course purchasing, user authentication, a chatbot, and a review system.  
@@ -27,7 +27,7 @@ The **Education Portal** is a web-based learning platform designed to provide in
 ## 🛠️ Setup Instructions  
 1. **Clone the repository**:  
    ```sh
-   git clone https://github.com/Raj_Patel_7807/Education_Portal.git
+   git clone https://github.com/Raj-Patel7807/Education_Portal.git
    ```
 2. **Open index.html in a browser.**
 3. **To modify, edit the HTML, CSS, and JavaScript files as needed.**
