@@ -58,6 +58,13 @@ document.addEventListener("DOMContentLoaded", () => {
     updateAura();
 
     const courseClick = (name, price, topics, btn, openBtn) => {
+        let loggedIn = localStorage.getItem("loggedIn");
+
+        if (!loggedIn) {
+            alert("Please log in first to purchase this course.");
+            return;
+        }
+        
         let Aura = parseInt(localStorage.getItem("Aura"));
         let purchased = JSON.parse(localStorage.getItem("purchased"));
 
