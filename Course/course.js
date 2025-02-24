@@ -64,23 +64,29 @@ document.addEventListener("DOMContentLoaded", () => {
             alert("Please log in first to purchase this course.");
             return;
         }
-        
+
         let Aura = parseInt(localStorage.getItem("Aura"));
         let purchased = JSON.parse(localStorage.getItem("purchased"));
 
         if (!purchased[name] && (price === 0 || Aura >= price)) {
-            if (price > 0) {
-                localStorage.setItem("Aura", Aura - price);
+            const okk = confirm("Do You Want To buy This Course..?");
+
+            if(okk) {
+                if (price > 0) {
+                    localStorage.setItem("Aura", Aura - price);
+                }
+
+                purchased[name] = new Array(topics.length).fill(false);
+                localStorage.setItem("purchased", JSON.stringify(purchased));
+
+                btn.innerText = "Enrolled";
+                btn.disabled = true;
+
+                openBtn.style.display = "inline-block";
+                updateAura();
+            } else {
+                return;
             }
-
-            purchased[name] = new Array(topics.length).fill(false);
-            localStorage.setItem("purchased", JSON.stringify(purchased));
-
-            btn.innerText = "Enrolled";
-            btn.disabled = true;
-
-            openBtn.style.display = "inline-block";
-            updateAura();
         } else if(!purchased[name] && Aura < price) {
             alert("You have to increase your aura to join this course");
         }
