@@ -2,79 +2,85 @@ const inputs = document.querySelectorAll("input");
 const nameInput = document.querySelector("#name");
 const emailInput = document.querySelector("#email");
 const passwordInput = document.querySelector("#password");
-const viewPass = document.querySelectorAll(".inp i");
 const confirmPassInput = document.querySelector("#confirmpass");
+const viewPass = document.querySelectorAll(".inp i");
 const submit = document.querySelector(".submit button");
 const signupBtn = document.querySelector(".signup a");
 
+const nameRegex = /^[A-Za-z\s]{3,}$/;
+const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+const showError = (input, message) => {
+    alert(message);
+    input.focus();
+};
+
 const validateForm = (event) => {
+
     const isSignUp = submit.innerText === "Sign Up";
 
     if (!nameInput.value.trim()) {
-        alert("Please, Enter Your Name!!");
-        nameInput.focus();
+        showError(nameInput, "Please enter your name!");
         event.preventDefault();
         return false;
-    } else if (!emailInput.value.trim()) {
-        alert("Please, Enter Your Email!!");
-        emailInput.focus();
+    } else if (!nameRegex.test(nameInput.value.trim())) {
+        showError(nameInput, "Name must be at least 3 characters and contain only letters and spaces.");
         event.preventDefault();
         return false;
-    } else if (!passwordInput.value.trim()) {
-        alert("Please, Enter Password!!");
-        passwordInput.focus();
+    }
+
+    if (!emailInput.value.trim()) {
+        showError(emailInput, "Please enter your email!");
         event.preventDefault();
         return false;
-    } else if (passwordInput.value.includes(" ")) {
-        alert("Password CANNOT Contain Spaces!");
-        passwordInput.focus();
+    } else if (!emailRegex.test(emailInput.value.trim())) {
+        showError(emailInput, "Invalid email format!");
         event.preventDefault();
         return false;
-    } else if (isSignUp) {
+    }
+
+    if (!passwordInput.value.trim()) {
+        showError(passwordInput, "Please enter a password!");
+        event.preventDefault();
+        return false;
+    } else if (!passwordRegex.test(passwordInput.value.trim())) {
+        showError(passwordInput, "Password must be 8+ chars, include uppercase, number & special character.");
+        event.preventDefault();
+        return false;
+    }
+
+    if (isSignUp) {
         if (!confirmPassInput.value.trim()) {
-            alert("Please, Enter Confirm Password!!");
-            confirmPassInput.focus();
+            showError(confirmPassInput, "Please confirm your password!");
             event.preventDefault();
             return false;
         } else if (confirmPassInput.value !== passwordInput.value) {
-            alert("Password and Confirm Password Do NOT Match!!");
-            confirmPassInput.focus();
+            showError(confirmPassInput, "Passwords do not match!");
             event.preventDefault();
             return false;
         }
     }
+
     return true;
 };
 
 inputs.forEach(input => {
-    input.addEventListener("focus", () => {
-        input.parentElement.classList.add("focus");
-    });
-
-    input.addEventListener("blur", () => {
-        input.parentElement.classList.remove("focus");
-    });
+    input.addEventListener("focus", () => input.parentElement.classList.add("focus"));
+    input.addEventListener("blur", () => input.parentElement.classList.remove("focus"));
 });
 
-viewPass.forEach(pass => {
-    pass.addEventListener("click", () => {
-        const input = pass.previousElementSibling;
-
-        if (input.type === "password") {
-            input.type = "text";
-            pass.classList.remove("fa-eye");
-            pass.classList.add("fa-eye-slash");
-        } else {
-            input.type = "password";
-            pass.classList.remove("fa-eye-slash");
-            pass.classList.add("fa-eye");
-        }
+viewPass.forEach(icon => {
+    icon.addEventListener("click", () => {
+        const input = icon.previousElementSibling;
+        input.type = input.type === "password" ? "text" : "password";
+        icon.classList.toggle("fa-eye");
+        icon.classList.toggle("fa-eye-slash");
     });
 });
 
 submit.addEventListener("click", (event) => {
     event.preventDefault();
-
     const isSignUp = submit.innerText === "Sign Up";
 
     if (validateForm(event)) {
@@ -83,23 +89,22 @@ submit.addEventListener("click", (event) => {
         let pass = passwordInput.value.trim();
 
         if (isSignUp) {  
-            localStorage.setItem("user", user);
-            localStorage.setItem("mail", mail);
-            localStorage.setItem("pass", pass);
-            alert("Sign Up Successful!! Now Log In..");
+            if (localStorage.getItem(`user_${mail}`)) {
+                alert("This email is already registered! Please login.");
+                return;
+            }
 
+            localStorage.setItem(`user_${mail}`, JSON.stringify({ name: user, pass: pass }));
+            alert("Sign Up Successful! Now Log In.");
             switchToLogin();
         } else {
-            
-            if (
-                user === localStorage.getItem("user") &&
-                mail === localStorage.getItem("mail") &&
-                pass === localStorage.getItem("pass")
-            ) {
-                localStorage.setItem("loggedIn", true);
+            let storedUser = JSON.parse(localStorage.getItem(`user_${mail}`));
+
+            if (storedUser && storedUser.pass === pass) {
+                localStorage.setItem("loggedIn", "true");
                 window.location.href = "../index.html";
             } else {
-                alert("You Are Not Signed Up.. So Sign Up First OR Check Credentials Again..");
+                alert("Can't Login, Invalid credentials! Check name, email and password.");
             }
         }
     }
