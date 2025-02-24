@@ -19,6 +19,77 @@ if(loggedIn) {
     }, 6000);
 }
 
+const validateForm = () => {
+    let name = document.getElementById("name").value.trim();
+    let email = document.getElementById("email").value.trim();
+    let phone = document.getElementById("phone").value.trim();
+    let msg = document.getElementById("msg").value.trim();
+
+    let nameRegex = /^[A-Za-z\s]+$/;
+    let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    let phoneRegex = /^[0-9]{10}$/;
+
+    if (name === "") {
+        alert("Name field cannot be empty.");
+        document.getElementById("name").focus();
+        return false;
+    }
+    if (!nameRegex.test(name)) {
+        alert("Name can only contain alphabets and spaces.");
+        document.getElementById("name").focus();
+        return false;
+    }
+
+    if (email === "") {
+        alert("Email field cannot be empty.");
+        document.getElementById("email").focus();
+        return false;
+    }
+    if (!emailRegex.test(email)) {
+        alert("Please enter a valid email address.");
+        document.getElementById("email").focus();
+        return false;
+    }
+
+    if (phone === "") {
+        alert("Phone number cannot be empty.");
+        document.getElementById("phone").focus();
+        return false;
+    }
+    if(isNaN(phone)) {
+        alert("Phone number can only contain digits.");
+        document.getElementById("phone").focus();
+        return false;
+    }
+    if (!phoneRegex.test(phone)) {
+        alert("Phone number must be exactly 10 digits.");
+        document.getElementById("phone").focus();
+        return false;
+    }
+
+    if (msg === "") {
+        alert("Message field cannot be empty.");
+        document.getElementById("msg").focus();
+        return false;
+    }
+
+    return true;
+}
+
+document.getElementById("submit").addEventListener("click", (event) => {
+    event.preventDefault();
+
+    validateForm();
+
+    if (validateForm()) {
+        alert("Form submitted successfully!");
+
+        setTimeout(() => {
+            window.location.reload();
+        }, 200);
+    }    
+});
+
 let defaultMsgTimeout;
 
 const courses = {
