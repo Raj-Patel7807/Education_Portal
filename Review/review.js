@@ -22,9 +22,19 @@ if(loggedIn) {
 document.addEventListener("DOMContentLoaded", () => {
     displayReviews();
 
+    if(!loggedIn) {
+        return;
+    }
+
+    let reviewMsg = document.querySelector(".review-msg");
+
     if (localStorage.getItem("reviewSubmitted") === "true") {
         document.querySelector(".rform").style.display = "none";
         document.querySelector(".add").style.display = "none";
+
+        // if (reviewMsg) {
+        //     reviewMsg.style.display = "block";
+        // }
     }
 });
 
@@ -77,6 +87,7 @@ document.querySelector(".submit").addEventListener("click", (event) => {
     let name = document.getElementById("name").value.trim();
     let review = document.getElementById("review").value.trim();
     let rating = document.querySelector("input[name='rating']:checked");
+    let reviewMsg = document.querySelector(".review-msg");
 
     if (name === "" || review === "" || rating === null) {
         alert("Please fill all fields before submitting.");
@@ -99,6 +110,12 @@ document.querySelector(".submit").addEventListener("click", (event) => {
 
     document.querySelector(".rform").style.display = "none";
     document.querySelector(".add").style.display = "none";
+
+    alert("🎉 Review submitted successfully! Thank you for your feedback. 😊");
+
+    // if (reviewMsg) {
+    //     reviewMsg.style.display = "block";
+    // }
 
     setTimeout(() => {
         const offset = 120;
