@@ -19,6 +19,15 @@ if(loggedIn) {
     }, 6000);
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+    displayReviews();
+
+    if (localStorage.getItem("reviewSubmitted") === "true") {
+        document.querySelector(".rform").style.display = "none";
+        document.querySelector(".add").style.display = "none";
+    }
+});
+
 document.getElementById("add-review-btn").addEventListener("click", () => {
     const reviewForm = document.getElementById("review-form");
     const offset = 100;
@@ -84,6 +93,8 @@ document.querySelector(".submit").addEventListener("click", (event) => {
     reviews.unshift(newReview);
     localStorage.setItem("reviews", JSON.stringify(reviews));
 
+    localStorage.setItem("reviewSubmitted", "true");
+
     displayReviews();
 
     document.querySelector(".rform").style.display = "none";
@@ -95,7 +106,22 @@ document.querySelector(".submit").addEventListener("click", (event) => {
             top: document.querySelector(".rev").offsetTop - offset,
             behavior: "smooth"
         });
-    }, 400);
+    }, 300);
+});
+
+document.querySelector(".close").addEventListener("click", (event) => {
+    event.preventDefault();
+
+    document.querySelector(".rform").style.display = "none";
+    document.querySelector(".add").style.display = "none";
+
+    setTimeout(() => {
+        const offset = 120;
+        window.scrollTo({
+            top: document.querySelector(".rev").offsetTop - offset,
+            behavior: "smooth"
+        });
+    }, 300);
 });
 
 const displayReviews = () => {
