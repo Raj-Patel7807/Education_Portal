@@ -82,7 +82,7 @@ document.getElementById("submit").addEventListener("click", (event) => {
     validateForm();
 
     if (validateForm()) {
-        alert("Form submitted successfully!");
+        alert("Form submitted successfully! We Contact You Soon..!!");
 
         setTimeout(() => {
             window.location.reload();
